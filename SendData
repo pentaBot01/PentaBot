@@ -1,0 +1,67 @@
+#include "classroom.h"
+
+#include <string>
+#include <map>
+#include <iostream>
+#include "student.h"
+
+Classroom::Classroom(string& name)
+  : m_theName(name)
+{
+    cout << "Constructing Classroom " << m_theName << endl;
+}
+
+Classroom::~Classroom()
+{
+    cout << "Destructing Classroom " << m_theName << endl;
+}
+
+bool Classroom::addStudent(int kNr, Student* student)
+{
+    cout << "calling Classroom::addStudent()" << endl;
+  if(m_theStudents.find(kNr) != m_theStudents.end())
+  {
+    return false;
+  }
+  m_theStudents[kNr] = student;
+}
+
+Student* Classroom::findStudent(int kNr)
+{
+    cout << "calling Classroom::findStudent(int kNr)" << endl;
+  if(m_theStudents.find(kNr) != m_theStudents.end())
+  {
+    return false;
+  }
+  return m_theStudents[kNr];
+}
+
+Student* Classroom::findStudent(string& surname)
+{
+    cout << "calling Classroom::findStudent(string surname) " << endl;
+  for(map<int, Student*>::iterator i = m_theStudents.begin(); i != m_theStudents.end(); i++)
+  {
+    if(i->second->getSurname() == surname)
+    {
+      return i->second;
+    }
+  }
+  return NULL;
+}
+
+int Classroom::getStudentAmount()
+{
+    cout << "Calling Classroom::getStudentAmount()" << endl;
+  return m_theStudents.size();
+}
+
+void Classroom::dump()
+{
+  cout << "calling Classroom::dump()" << endl;
+  cout << "Classroom " << m_theName << endl;
+  for(map<int, Student*>::iterator i = m_theStudents.begin(); i != m_theStudents.end(); i++)
+  {
+    i->second->dump();
+  }
+  cout << endl;
+}
